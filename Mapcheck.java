@@ -24,9 +24,7 @@ public class Mapcheck {
 
         int objectconverted = Integer.valueOf((int)franceradioactivity.get(key));
 
-        if (objectconverted < 50) {
-            radioactivityindicator = "Green";
-        } else if (objectconverted >= 50 && objectconverted < 100) {
+        if (objectconverted < 100) {
             radioactivityindicator = "Green";
         } else if (objectconverted >= 100 && objectconverted < 150) {
             radioactivityindicator = "Yellow";
