@@ -1,36 +1,19 @@
-package frradioactivityapp.java;
+package frradioactivity;
 
-import java.util.HashMap;
+public class Mapcheck { //une seule responsabilité. SRP, Single Responsibility Principle.
 
-public class Mapcheck {
 
-    HashMap<Integer, Integer> franceradioactivity; //key 1: department, key 2: radioactivity
-    String radioactivityindicator; //return value
+    public synchronized String getRadioactivity(int radioactivityRate) { //préciser le datatype dans le paramètre pour éviter un cast inutile.
 
-    Mapcheck(){
-        HashMap<Integer, Integer> franceradioactivity = new HashMap();
-        String radioactivityindicator = "Unchecked";
-    }
-
-    public static void initMap(HashMap franceradioactivity){ //initiate Map components
-        franceradioactivity.put(1, 50);
-        franceradioactivity.put(2, 100);
-        franceradioactivity.put(3, 150);
-        franceradioactivity.put(4, 200);
-        franceradioactivity.put(5, 25);
-    }
-
-    public synchronized String getRadioactivity(HashMap franceradioactivity, int key) { //gets right colour String
-
-        int objectconverted = Integer.valueOf((int)franceradioactivity.get(key));
-
-        if (objectconverted < 100) {
+        //return value
+        String radioactivityindicator;
+        if (radioactivityRate < 100) {
             radioactivityindicator = "Green";
-        } else if (objectconverted >= 100 && objectconverted < 150) {
+        } else if (radioactivityRate < 150) {
             radioactivityindicator = "Yellow";
-        } else if (objectconverted >= 150 && objectconverted < 200) {
+        } else if (radioactivityRate < 200) {
             radioactivityindicator = "Orange";
-        } else if (objectconverted >= 200) {
+        } else {
             radioactivityindicator = "Red";
         }
 
