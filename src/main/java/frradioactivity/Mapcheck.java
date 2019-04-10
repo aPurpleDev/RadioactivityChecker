@@ -1,11 +1,11 @@
 package frradioactivity;
 
-public class Mapcheck { //One purpose. SRP, Single Responsibility Principle.
+public class Mapcheck {
 
-    enum RadioColor { //Enum to return as per exercise instructions
+    enum RadioColor {
 
-        GREEN(0,50), //radioactivityIndex is the color's limit per radioactivity.
-        YELLOW(51,100), //the colorname is just a String containing the name's color
+        GREEN(0,50),
+        YELLOW(51,100),
         ORANGE(101,150),
         RED(151,Integer.MAX_VALUE);
 
@@ -20,39 +20,54 @@ public class Mapcheck { //One purpose. SRP, Single Responsibility Principle.
 
     }
 
-    class EnumChecker{ //contains the method to return the right enum per radioactivityindex
+    enum RadioDim{ //Enum for a dimension argument in the checkRadioColorBcq method
 
-        public RadioColor checkRadioColor(int deptRadioactivity){
+        BCQMTRCUBE(0),
+        BCQDCMTRCUBE(0);
 
-            for (RadioColor value : RadioColor.values()) {
-                if(value.minRadioIndex <= deptRadioactivity && value.maxRadioIndex >= deptRadioactivity) {
-                    return value;
-                }
+        public int bcqValue;
+
+        RadioDim(int bcqValue){
+            this.bcqValue = bcqValue;
+        }
+    }
+
+    class EnumChecker{
+
+        public RadioColor checkRadioColorBcq(int deptRadioactivity) {
+
+            if(deptRadioactivity <= 50) {
+
+                return RadioColor.GREEN;
             }
-            throw new IllegalArgumentException(); //Pour sécuriser la méthode
+            if (deptRadioactivity <= 100) {
+
+                return RadioColor.YELLOW;
+
+            }
+            if (deptRadioactivity <= 150) {
+
+                return RadioColor.ORANGE;
+
+            }
+
+            return RadioColor.RED;
         }
 
-        public RadioColor checkRadioColor2(int deptRadioactivity) {
+        public RadioColor bcqDim(RadioDim dim, int bcqValue){
 
-            RadioColor colorreturn = null;
+                switch(dim) {
 
-                if(deptRadioactivity <= 50) {
+                    case BCQMTRCUBE:
 
-                    return RadioColor.GREEN; //retourne une instance de l'enum
+                        return checkRadioColorBcq(bcqValue);
 
-                }
-                if (deptRadioactivity <= 100) {
 
-                    return RadioColor.YELLOW;
+                    case BCQDCMTRCUBE:
 
-                }
-                if (deptRadioactivity <= 150) {
+                        return checkRadioColorBcq(bcqValue / 1000);
 
-                    return RadioColor.ORANGE;
-
-                }
-
-                return RadioColor.RED;
+                }throw new IllegalArgumentException();
         }
     }
 }
