@@ -22,17 +22,44 @@ public class Mapcheck {
 
     enum RadioDim{ //Enum for a dimension argument in the checkRadioColorBcq method
 
-        BCQMTRCUBE(0),
-        BCQDCMTRCUBE(0);
+        BCQMTRCUBE,
+        BCQDCMTRCUBE;
 
-        public int bcqValue;
-
-        RadioDim(int bcqValue){
-            this.bcqValue = bcqValue;
+        RadioDim(){
         }
     }
 
-    class EnumChecker{
+    class RadioValue{
+
+        RadioDim dim;
+        int value;
+
+        RadioValue(){
+
+            this.dim = RadioDim.BCQMTRCUBE;
+            this.value = 0;
+        }
+
+        RadioValue(RadioDim dim, int value){
+
+            this.dim = dim;
+            this.value = value;
+        }
+
+        public RadioColor checkRadioValue(RadioValue deptRadioactivity){
+
+            switch(deptRadioactivity.dim){
+
+                case BCQMTRCUBE:
+
+                    return checkRadioColorBcq(deptRadioactivity.value);
+
+                case BCQDCMTRCUBE:
+
+                    return checkRadioColorBcq(deptRadioactivity.value/1000);
+
+            }throw new IllegalArgumentException();
+        }
 
         public RadioColor checkRadioColorBcq(int deptRadioactivity) {
 
@@ -43,31 +70,12 @@ public class Mapcheck {
             if (deptRadioactivity <= 100) {
 
                 return RadioColor.YELLOW;
-
             }
             if (deptRadioactivity <= 150) {
 
                 return RadioColor.ORANGE;
-
             }
-
             return RadioColor.RED;
-        }
-
-        public RadioColor bcqDim(RadioDim dim, int bcqValue){
-
-                switch(dim) {
-
-                    case BCQMTRCUBE:
-
-                        return checkRadioColorBcq(bcqValue);
-
-
-                    case BCQDCMTRCUBE:
-
-                        return checkRadioColorBcq(bcqValue / 1000);
-
-                }throw new IllegalArgumentException();
         }
     }
 }
